@@ -1,33 +1,37 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: WebSocketExample(),
     );
   }
 }
 
 class WebSocketExample extends StatefulWidget {
+  const WebSocketExample({super.key});
+
   @override
-  _WebSocketExampleState createState() => _WebSocketExampleState();
+  WebSocketExampleState createState() => WebSocketExampleState();
 }
 
-class _WebSocketExampleState extends State<WebSocketExample> {
+class WebSocketExampleState extends State<WebSocketExample> {
   final TextEditingController _controller = TextEditingController();
   late WebSocketChannel _channel;
 
   @override
   void initState() {
     super.initState();
-    // Initialize the WebSocket connection
     _channel = WebSocketChannel.connect(
       Uri.parse('ws://localhost:8888'),
     );
@@ -42,11 +46,10 @@ class _WebSocketExampleState extends State<WebSocketExample> {
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
-      // Send JSON message
       final message = jsonEncode({"text": _controller.text});
       _channel.sink.add(message);
-      print("Sent message: $message");
-      _controller.clear(); // Clear the input after sending
+      log("Sent message: $message");
+      _controller.clear();
     }
   }
 
@@ -54,20 +57,20 @@ class _WebSocketExampleState extends State<WebSocketExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WebSocket Text Sender"),
+        title: const Text("WebSocket Text Sender"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _controller,
-              decoration: InputDecoration(labelText: 'Enter text'),
+              decoration: const InputDecoration(labelText: 'Enter text'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _sendMessage,
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
