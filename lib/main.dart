@@ -32,9 +32,19 @@ class WebSocketExampleState extends State<WebSocketExample> {
   @override
   void initState() {
     super.initState();
+    _connectWebSocket();
+  }
+
+  void _connectWebSocket() {
     _channel = WebSocketChannel.connect(
       Uri.parse('ws://localhost:8888'),
     );
+  }
+
+  void _refreshConnection() {
+    _channel.sink.close();
+    _connectWebSocket();
+    log("WebSocket connection refreshed");
   }
 
   @override
@@ -71,6 +81,11 @@ class WebSocketExampleState extends State<WebSocketExample> {
             ElevatedButton(
               onPressed: _sendMessage,
               child: const Text('Submit'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _refreshConnection,
+              child: const Text('Refresh Connection'),
             ),
           ],
         ),
