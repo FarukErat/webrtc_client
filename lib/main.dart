@@ -37,7 +37,7 @@ class WebSocketExampleState extends State<WebSocketExample> {
 
   void _connectWebSocket() {
     _channel = WebSocketChannel.connect(
-      Uri.parse('ws://localhost:8888'),
+      Uri.parse('ws://localhost:8765'),
     );
   }
 
